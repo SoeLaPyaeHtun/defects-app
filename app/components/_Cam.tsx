@@ -43,8 +43,8 @@ const _Cam = () => {
   return (
     <div>
      
-      <div className='w-full flex flex-row justify-center items-center'>
-      <div className='w-1/4'>  </div>
+      <div className='w-full flex flex-col justify-center items-center'>
+    
       <div className='w-1/4'> {image !== "" && <DrawSketch imageEncode={image} />}</div>
     <div className='px-10'></div>
       <div className='w-1/4'> {image !== "" && <DrawRectangle imageEncode={image} />}</div>
