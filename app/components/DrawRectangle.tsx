@@ -56,7 +56,7 @@ const DrawRectangle: React.FC<IImgProps> = ({ imageEncode }) => {
   return (
     <div>
       <ReactCrop crop={crop} onChange={setCrop} >
-        <canvas 
+        <canvas
           ref={canvasRef}
         />
       </ReactCrop>

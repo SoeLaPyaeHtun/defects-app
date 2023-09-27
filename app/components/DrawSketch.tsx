@@ -36,7 +36,7 @@ const DrawSketch: React.FC<IImgProps> = ({ imageEncode }) => {
     }, [imageEncode]);
 
     //start drawing
-    const startDrawing: React.MouseEventHandler = ({nativeEvent}) => {
+    const startDrawing: React.MouseEventHandler | React.TouchEventHandler = ({nativeEvent}) => {
         const { offsetX, offsetY } = nativeEvent;
         contextRef.current.beginPath();
         contextRef.current.moveTo(offsetX, offsetY);
@@ -47,7 +47,7 @@ const DrawSketch: React.FC<IImgProps> = ({ imageEncode }) => {
     };
 
     //drawing
-    const draw: React.MouseEventHandler = ({nativeEvent}) => {
+    const draw: React.MouseEventHandler | React.TouchEventHandler = ({nativeEvent}) => {
         if (!isDrawing) {
             return;
         }
@@ -63,7 +63,7 @@ const DrawSketch: React.FC<IImgProps> = ({ imageEncode }) => {
         setIsDrawing(false);
     };
 
-    const saveImageToLocal = (event: React.MouseEventHandler<HTMLCanvasElement> | any) => {
+    const saveImageToLocal = (event: React.MouseEventHandler<HTMLCanvasElement> | React.TouchEventHandler<HTMLCanvasElement> | any) => {
         let link = event.currentTarget;
         link.setAttribute('download', 'canvas.png');
         let image_ = canvasRef.current.toDataURL('image/png');
@@ -78,6 +78,9 @@ const DrawSketch: React.FC<IImgProps> = ({ imageEncode }) => {
                 onMouseMove={draw}
                 onMouseUp={stopDrawing}
                 onMouseLeave={stopDrawing}
+                onTouchStart={startDrawing}
+                onTouchMove={draw}
+                onTouchEnd={stopDrawing}
             />
             <div>
                 <a id="download_image_link" href="download_link" onClick={saveImageToLocal}>Download Image</a>
