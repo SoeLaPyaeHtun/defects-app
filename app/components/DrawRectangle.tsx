@@ -4,10 +4,14 @@ import 'react-image-crop/dist/ReactCrop.css';
 
 
 interface IImgProps {
-  imageEncode: string
+  imageEncode: string,
+  size: {
+    width: Number,
+    height: Number
+  }
 }
 
-const DrawRectangle: React.FC<IImgProps> = ({ imageEncode }) => {
+const DrawRectangle: React.FC<IImgProps> = ({ imageEncode, size }) => {
 
   const [crop, setCrop] = useState<Crop>();
   const [image, setImage] = useState(null);
@@ -22,8 +26,10 @@ const DrawRectangle: React.FC<IImgProps> = ({ imageEncode }) => {
     if (imageEncode !== "") {
       if (canvasRef && canvasRef.current) {
         const canvas = canvasRef.current;
-        canvas.width = 500;
-        canvas.height = 500;
+
+        canvas.width = size.width;
+        canvas.height = size.height;
+
         const context = canvas.getContext("2d");
         context.lineCap = "round";
         context.strokeStyle = "black";
@@ -32,7 +38,8 @@ const DrawRectangle: React.FC<IImgProps> = ({ imageEncode }) => {
         if (typeof imageEncode === "string" && context !== null) {
           img.src = imageEncode
           img.onload = () => {
-            context.drawImage(img, 0, 0)
+            context.drawImage(img, 0, 0, canvas.width, canvas.height)
+            console.log(img.width)
           }
 
           contextRef.current = context;
