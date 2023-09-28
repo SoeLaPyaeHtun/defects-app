@@ -28,7 +28,9 @@ const Camera = () => {
   }, [facingMode]);
 
   const toggleFacingMode = () => {
-    setIsFrontCamera((prevMode) => !prevMode);
+    setFacingMode((prevMode) =>
+      prevMode === 'environment' ? 'user' : 'environment'
+    );
   };
 
   const takePhoto = () => {
