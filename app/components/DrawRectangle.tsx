@@ -58,6 +58,7 @@ const DrawRectangle: React.FC<IImgProps> = ({ imageEncode }) => {
       <ReactCrop crop={crop} onChange={setCrop} >
         <canvas
           ref={canvasRef}
+          className='border border-green-900'
         />
       </ReactCrop>
 

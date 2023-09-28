@@ -1,16 +1,17 @@
 'use client'
-
-import _Cam from './components/_Cam'
-
+import Head from 'next/head';
+import Camera from './components/Camera';
 
 export default function Home() {
   return (
-    <div className='w-full h-screen'>
-      <div>
-        <h1>CAMERA CAPTURE</h1>
-  
-        <_Cam />
-      </div>
-  </div>
-  )
+    <div>
+      <Head>
+        <title>Camera App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+      <main>
+        <Camera />
+      </main>
+    </div>
+  );
 }
