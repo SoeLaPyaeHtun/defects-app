@@ -1,17 +1,24 @@
 'use client'
 import Head from 'next/head';
 import Camera from './components/Camera';
+import { useState } from 'react';
 
 export default function Home() {
+  
+    const [facingMode, setFacingMode] = useState('environment'); // 'user' for front camera, 'environment' for back camera
+
+  const toggleFacingMode = () => {
+    setFacingMode((prevMode) =>
+      prevMode === 'environment' ? 'user' : 'environment'
+    );
+  };
+
   return (
-    <div>
-      <Head>
-        <title>Camera App</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-      <main>
-        <Camera />
-      </main>
+    <div className="container">
+      <h1>Camera App</h1>
+      <button onClick={toggleFacingMode}>Toggle Camera</button>
+      <Camera facingMode={facingMode} />
     </div>
   );
+  
 }
