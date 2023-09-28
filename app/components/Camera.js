@@ -6,7 +6,7 @@ const Camera = () => {
     //const [isFrontCamera, setIsFrontCamera] = useState(false);
     const [facingMode, setFacingMode] = useState('environment');
     const [capturedPhoto, setCapturedPhoto] = useState(null);
-    const [size , setSize] = useState(null)
+    const [size, setSize] = useState(null)
 
 
 
@@ -29,7 +29,7 @@ const Camera = () => {
         };
 
         initCamera();
-    }, [facingMode]);
+    }, [facingMode, capturedPhoto]);
 
     const toggleFacingMode = () => {
         setFacingMode((prevMode) =>
@@ -50,10 +50,10 @@ const Camera = () => {
             console.log(videoRef.current.clientHeight)
             setCapturedPhoto(photoDataUrl);
             setSize({
-                width : canvas.width,
-                height : canvas.height
+                width: canvas.width,
+                height: canvas.height
             })
-            
+
         }
     };
     console.log(size)
@@ -74,8 +74,10 @@ const Camera = () => {
                     </div>
                     :
                     <div>
-
-                        <DrawRectangle imageEncode={capturedPhoto} size={size} />
+                        <div>
+                            <DrawRectangle imageEncode={capturedPhoto} size={size} />
+                            <button onClick={() => { setCapturedPhoto(null) }}> retake </button>
+                        </div>
 
                     </div>
 
