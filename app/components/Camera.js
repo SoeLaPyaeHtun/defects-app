@@ -3,7 +3,8 @@ import React, { useRef, useEffect, useState } from 'react';
 const Camera = () => {
   const videoRef = useRef(null);
   const [isFrontCamera, setIsFrontCamera] = useState(false);
-    <button onClick={toggleFacingMode}>Toggle Camera</button>
+  const [facingMode, setFacingMode] = useState('environment'); 
+
 
   useEffect(() => {
     setIsFrontCamera(facingMode === 'user');
@@ -26,13 +27,8 @@ const Camera = () => {
     initCamera();
   }, [facingMode]);
 
-
-  const [facingMode, setFacingMode] = useState('environment'); // 'user' for front camera, 'environment' for back camera
-
   const toggleFacingMode = () => {
-    setFacingMode((prevMode) =>
-      prevMode === 'environment' ? 'user' : 'environment'
-    );
+    setIsFrontCamera((prevMode) => !prevMode);
   };
 
   const takePhoto = () => {
