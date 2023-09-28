@@ -1,47 +1,29 @@
-// components/Camera.js
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import Webcam from 'react-webcam';
 
-function Camera() {
-  const videoRef = useRef(null);
-  const [isFrontCamera, setIsFrontCamera] = useState(true);
-
-  useEffect(() => {
-    const constraints = {
-      video: {
-        facingMode: isFrontCamera ? 'user' : 'environment',
-      },
-    };
-
-    async function setupCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        videoRef.current.srcObject = stream;
-      } catch (error) {
-        console.error('Error accessing camera:', error);
-      }
-    }
-
-    setupCamera();
-
-    return () => {
-      if (videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach((track) => track.stop());
-      }
-    };
-  }, [isFrontCamera]);
+const Camera = () => {
+  const [facingMode, setFacingMode] = useState('user'); // 'user' for front camera, 'environment' for back camera
+  const webcamRef = useRef(null);
 
   const toggleCamera = () => {
-    setIsFrontCamera(!isFrontCamera);
+    setFacingMode((prevFacingMode) =>
+      prevFacingMode === 'user' ? 'environment' : 'user'
+    );
   };
 
   return (
     <div>
-      <video ref={videoRef} autoPlay playsInline />
+      <Webcam
+        audio={false}
+        ref={webcamRef}
+        mirrored={facingMode === 'environment'}
+        screenshotFormat="image/jpeg"
+        videoConstraints={{ facingMode: facingMode }}
+        style={{ width: '100%', height: 'auto' }}
+      />
       <button onClick={toggleCamera}>Switch Camera</button>
     </div>
   );
-}
+};
 
 export default Camera;
