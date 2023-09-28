@@ -1,46 +1,45 @@
-import React, { useEffect, useRef } from 'react';
+// components/Camera.js
+import { useState, useEffect, useRef } from 'react';
 
 function Camera() {
   const videoRef = useRef(null);
+  const [isFrontCamera, setIsFrontCamera] = useState(true);
 
   useEffect(() => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: 'environment' }, audio: false })
-        .then((stream) => {
-          videoRef.current.srcObject = stream;
-        })
-        .catch((error) => {
-          console.error('Error accessing the camera:', error);
-        });
+    const constraints = {
+      video: {
+        facingMode: isFrontCamera ? 'user' : 'environment',
+      },
+    };
+
+    async function setupCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        videoRef.current.srcObject = stream;
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+      }
     }
-  }, []);
+
+    setupCamera();
+
+    return () => {
+      if (videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => track.stop());
+      }
+    };
+  }, [isFrontCamera]);
+
+  const toggleCamera = () => {
+    setIsFrontCamera(!isFrontCamera);
+  };
 
   return (
-    <div className="camera">
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        className="camera-preview"
-      ></video>
-      <style jsx>{`
-        .camera {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100vw;
-          height: 100vh;
-          overflow: hidden;
-          position: relative;
-        }
-
-        .camera-preview {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      `}</style>
+    <div>
+      <video ref={videoRef} autoPlay playsInline />
+      <button onClick={toggleCamera}>Switch Camera</button>
     </div>
   );
 }
