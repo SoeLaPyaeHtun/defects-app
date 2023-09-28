@@ -47,7 +47,7 @@ const _Cam = () => {
 
         {/* <div className='w-1/4'> {image !== "" && <DrawSketch imageEncode={image} />}</div>
     <div className='px-10'></div> */}
-        <div className='w-1/4'> {image !== "" && <DrawRectangle imageEncode={image} />}</div>
+        {/* <div className='w-1/4'> {image !== "" && <DrawRectangle imageEncode={image} />}</div> */}
       </div>
 
       <div className='relative'>
