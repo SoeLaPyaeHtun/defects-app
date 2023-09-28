@@ -3,7 +3,7 @@ import DrawRectangle from './DrawRectangle';
 
 const Camera = () => {
     const videoRef = useRef(null);
-    const [isFrontCamera, setIsFrontCamera] = useState(false);
+    //const [isFrontCamera, setIsFrontCamera] = useState(false);
     const [facingMode, setFacingMode] = useState('environment');
     const [capturedPhoto, setCapturedPhoto] = useState(null);
     const [size , setSize] = useState(null)
@@ -11,7 +11,7 @@ const Camera = () => {
 
 
     useEffect(() => {
-        setIsFrontCamera(facingMode === 'user');
+        // setIsFrontCamera(facingMode === 'user');
 
         const constraints = {
             video: { facingMode },
@@ -63,7 +63,7 @@ const Camera = () => {
             {
                 capturedPhoto === null ?
                     <div>
-                        <button onClick={toggleFacingMode}>Toggle Camera</button>
+                        <button onClick={toggleFacingMode}>Switch Camera</button>
                         <video ref={videoRef} autoPlay playsInline muted className="camera-preview"></video>
                         <div className="camera-controls">
 
