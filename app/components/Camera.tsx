@@ -2,13 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import DrawRectangle from './DrawRectangle';
 
 const Camera = () => {
-    const videoRef = useRef(null);
+    const videoRef = useRef<any>(null);
     //const [isFrontCamera, setIsFrontCamera] = useState(false);
     const [facingMode, setFacingMode] = useState('environment');
-    const [capturedPhoto, setCapturedPhoto] = useState(null);
-    const [size, setSize] = useState(null)
-
-
+    const [capturedPhoto, setCapturedPhoto] = useState<string | null | any>(null);
+    const [size, setSize] = useState<object | null | any>(null)
 
     useEffect(() => {
         // setIsFrontCamera(facingMode === 'user');
@@ -42,7 +40,8 @@ const Camera = () => {
             const canvas = document.createElement('canvas');
             canvas.width = videoRef.current.clientWidth;
             canvas.height = videoRef.current.clientHeight;
-            const context = canvas.getContext('2d');
+            const context: CanvasRenderingContext2D | null | any = canvas.getContext('2d');
+
             context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
             // You can now work with the captured image (e.g., save it or display it)
@@ -56,35 +55,29 @@ const Camera = () => {
 
         }
     };
-    console.log(size)
-
     return (
         <div className="camera-container">
             {
                 capturedPhoto === null ?
                     <div>
-                        <button onClick={toggleFacingMode}>Switch Camera</button>
+                       
                         <video ref={videoRef} autoPlay playsInline muted className="camera-preview"></video>
                         <div className="camera-controls">
 
-                            <button onClick={takePhoto} className="camera-button">
+                            <button onClick={takePhoto} className="border border-green-600 p-2 m-5 rounded-lg">
                                 Take Photo
                             </button>
+                            <button onClick={toggleFacingMode} className="border border-blue-600 p-2 m-5 rounded-lg">Switch Camera</button>
                         </div>
                     </div>
                     :
                     <div>
                         <div>
                             <DrawRectangle imageEncode={capturedPhoto} size={size} />
-                            <button onClick={() => { setCapturedPhoto(null) }}> retake </button>
+                            <button onClick={() => { setCapturedPhoto(null) }} className="border border-blue-600 p-2 m-5 rounded-lg"> retake </button>
                         </div>
-
                     </div>
-
             }
-
-
-
         </div>
     );
 };

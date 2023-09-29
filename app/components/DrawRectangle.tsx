@@ -47,7 +47,7 @@ const DrawRectangle: React.FC<IImgProps> = ({ imageEncode, size }) => {
         }
       }
     }
-  }, [imageEncode]);
+  }, [imageEncode, size]);
 
   const saveImageToLocal = (event: React.MouseEventHandler<HTMLCanvasElement> | any) => {
     contextRef.current.strokeRect(crop?.x, crop?.y, crop?.width, crop?.height);
@@ -68,9 +68,10 @@ const DrawRectangle: React.FC<IImgProps> = ({ imageEncode, size }) => {
           className='border border-green-900'
         />
       </ReactCrop>
-
+<br/>
+<br/>
       <div>
-        <a id="download_image_link" href="download_link" onClick={saveImageToLocal}>Download Image</a>
+        <a id="download_image_link" href="download_link" onClick={saveImageToLocal} className="border border-blue-600 p-2 m-5 rounded-lg">Download Image</a>
       </div>
 
 
