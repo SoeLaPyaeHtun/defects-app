@@ -60,7 +60,7 @@ const Camera = () => {
             {
                 capturedPhoto === null ?
                     <div>
-                       
+
                         <video ref={videoRef} autoPlay playsInline muted className="camera-preview"></video>
                         <div className="camera-controls">
 
